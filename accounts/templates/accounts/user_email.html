@@ -1,0 +1,10 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+Thanks for registering with us. Please click on the link below to activate your account:
+
+{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Thank you,
+Your Website Team
+{% endautoescape %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ul>
+  <div id="timer">Time left: 300 seconds</div>
+  <li> Every Question Point: {{ question.point }}</li>
+  {% for question in quizs.question_set.all %}
+    <li>
+      {{ question.question }}
+      <ul>
+        <li><a class="choice-link btn btn-primary"  data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="#">Choice 1: {{ question.choice_1 }}</a></li>
+        <li><a class="choice-link btn btn-success" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="#">Choice 2: {{ question.choice_2 }}</a></li>
+        <li><a class="choice-link btn btn-warning" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="#">Choice 3: {{ question.choice_3 }}</a></li>
+        <li><a class="choice-link btn btn-info" data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="#">Choice 4: {{ question.choice_4 }}</a></li>
+      </ul>
+    </li>
+  {% endfor %}
+  <br/>
+  <button class="btn btn-danger"><a href=" {% url 'review' %} ">Complite</a></button>
+  <!-- <button id="reviewButton">Review</button>
+  <button id="historyButton">History</button> -->
+</ul>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var choiceLinks = document.querySelectorAll('.choice-link');
+    var timerElement = document.getElementById('timer');
+    var timeLeft = 300; // Set the initial time in seconds
+
+    function preventDefault(event) {
+      event.preventDefault();
+    }
+
+    function updateTimer() {
+      var minutes = Math.floor(timeLeft / 60);
+      var seconds = timeLeft % 60;
+
+      timerElement.textContent = 'Time left: ' + minutes + 'm ' + seconds + 's';
+
+      if (timeLeft === 0) {
+        // Redirect to home page when the timer reaches zero
+        window.location.href = '/'; // Change this to your home page URL
+      } else {
+        timeLeft--;
+        setTimeout(updateTimer, 1000); // Update the timer every second
+      }
+    }
+
+    // Start the timer when the page loads
+    updateTimer();
+
+    choiceLinks.forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        preventDefault(event);
+
+        var questionId = this.getAttribute('data-question-id');
+        var selectedChoice = this.getAttribute('data-choice');
+
+        // Disable other choices for the same question
+        var otherChoices = document.querySelectorAll('.choice-link[data-question-id="' + questionId + '"]');
+        otherChoices.forEach(function(otherChoice) {
+          if (otherChoice !== link) {
+            otherChoice.removeEventListener('click', preventDefault);
+            otherChoice.style.pointerEvents = 'none';
+          }
+        });
+
+        // Make AJAX request
+        fetch(`/check_answer/${questionId}/${selectedChoice}/`)
+          .then(response => response.json())
+          .then(data => {
+            alert(data.is_correct ? 'Correct!' : 'Incorrect!');
+            // You can update the UI here if needed
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    });
+
+    // Button click events
+    document.getElementById('reviewButton').addEventListener('click', function() {
+      // Add logic for the "Review" button, e.g., redirect to a review page
+      window.location.href = '/review-page/'; // Change this to your desired review page URL
+    });
+
+    document.getElementById('historyButton').addEventListener('click', function() {
+      // Add logic for the "History" button, e.g., redirect to a history page
+      window.location.href = '/history-page/'; // Change this to your desired history page URL
+    });
+  });
+</script>
+
+{% endblock %}
