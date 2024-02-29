@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure--o-kjiyd&yzalis@4y67lo&$zs6ezy&87&c3%%g^aos_4$4q^m
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://final-quiz-rniv.onrender.com','https://*.127.0.0.1']
 
 
 # Application definition
