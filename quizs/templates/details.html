@@ -92,4 +92,36 @@
   });
 </script>
 
+
+
+<style>
+  .card{
+      transition: all 0.3s;
+  }
+  .card:hover{
+      transform: scale(1.15);
+  }
+
+</style>
+<div class="col-12">
+  <div class="d-flex justify-content-center align-items-center">
+
+  <h1 class="  text-bg-danger"><span>   Reviews</h1></span> 
+  </div>
+<div class="col-12 p-3">
+<div class="d-flex flex-wrap  pt-5 m-4">
+{% for review in reviews %}
+<div class="m-4">
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title text-uppercase" >{{review.Name}}</h5>
+    <h5 class="card-title">{{review.rating}}</h5>
+    <a href="#" class="btn btn-primary text-uppercase"></a>
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
 {% endblock %}

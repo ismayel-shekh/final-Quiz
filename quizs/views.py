@@ -17,11 +17,11 @@ class QuizView(DetailView):
     context_object_name = 'quizs'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # quiz = self.object
-        # reviews = quiz.reviews.all()
-        # review_form = forms.ReviewForm()
-        # context['reviews'] = reviews
-        # context['reviews_form'] = review_form
+        quiz = self.object
+        reviews = quiz.reviews.all()
+        review_form = forms.ReviewForm()
+        context['reviews'] = reviews
+        context['reviews_form'] = review_form
 
         return context
 
