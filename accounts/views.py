@@ -78,7 +78,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 from django.urls import reverse
-
+from django.contrib import messages
 class UserRegistrationView(FormView):
     template_name = 'accounts/user_registration.html'
     form_class = UserFrom
@@ -102,7 +102,7 @@ class UserRegistrationView(FormView):
         to_email = form.cleaned_data['email']
         email = EmailMessage(subject, message, to=[to_email])
         email.send()
-
+        messages.success(self.request, "if you want to show your Registration verification link Chack your email address")
         login(self.request, user)
         return super().form_valid(form)
 

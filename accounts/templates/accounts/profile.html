@@ -2,6 +2,26 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<script>
+  {% if messages %}
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        title: 'Messages',
+        html: `
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        `,
+        icon: 'info',
+        showCloseButton: true,
+        confirmButtonText: 'OK',
+      });
+    });
+  {% endif %}
+</script>
+
  <style>
      /* .card {
         margin-top: 2em;

@@ -59,10 +59,20 @@
             <!-- Section: CTA -->
             <section class="">
                 <p class="d-flex justify-content-center align-items-center">
+                    {% if request.user.is_authenticated %}
+                    <span class="me-3">Cuntrct Us </span>
+
+                    <button type="button" class="btn btn-outline-light btn-rounded">
+                        Hi!
+                    </button>
+                    {% else %}
+                    
                     <span class="me-3">Register for free</span>
+
                     <button type="button" class="btn btn-outline-light btn-rounded">
                         Sign up!
                     </button>
+                    {% endif %}
                 </p>
             </section>
             <!-- Section: CTA -->
