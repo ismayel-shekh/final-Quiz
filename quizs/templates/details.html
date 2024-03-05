@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<ul>
+<!-- <ul>
   <div id="timer">Time left: 300 seconds</div>
   <li> Every Question Point: {{ question.point }}</li>
   {% for question in quizs.question_set.all %}
@@ -20,8 +20,60 @@
   <button class="btn btn-danger"><a href=" {% url 'review' %} ">Complite</a></button>
   <!-- <button id="reviewButton">Review</button>
   <button id="historyButton">History</button> -->
-</ul>
+<!-- </ul> -->
 
+<!-- <div id="timer">Time left: 300 seconds</div> -->
+
+<div class="container mt-4">
+  <div id="timer" class="text-center mb-4">
+    
+    <h4 class="font-weight-bold text-primary">Time Remaining</h4>
+    
+    <div id="timer-display" class="display-4 gradient-text">300s</div>
+</div>
+    <div class="row">
+        <div class="col-12">
+          
+        </div>
+        {% for question in quizs.question_set.all %}
+        <div class="col-12 mt-4">
+          <div class="card">
+            <div class="card-body">
+                      <h4 class="font-weight-bold text-success">Quiz Point: {{ question.point }}</h4>
+                        <h5 class="card-title" style="color: #0066cc; font-size: 1.5em; font-weight: bold;">{{ question.question }}</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="#">
+                                    1. {{ question.choice_1 }}
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="#">
+                                    2. {{ question.choice_2 }}
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="#">
+                                    3. {{ question.choice_3 }}
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="#">
+                                    4. {{ question.choice_4 }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <button class="btn btn-warning"><a class="text-decoration-none" href="{% url 'review' %}">Complete</a></button>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -72,7 +124,12 @@
         fetch(`/check_answer/${questionId}/${selectedChoice}/`)
           .then(response => response.json())
           .then(data => {
-            alert(data.is_correct ? 'Correct!' : 'Incorrect!');
+            Swal.fire({
+              icon: data.is_correct ? 'success' : 'error',
+              title: data.is_correct ? 'Correct!' : 'Incorrect!',
+              showConfirmButton: false,
+              timer: 1500 // Set the timer to automatically close the notification after 1.5 seconds
+            });
             // You can update the UI here if needed
           })
           .catch(error => console.error('Error:', error));
@@ -98,15 +155,56 @@
   .card{
       transition: all 0.3s;
   }
-  .card:hover{
+  /* .card:hover{
       transform: scale(1.15);
-  }
+  } */
 
+  #timer {
+            background-color: #f8d7da;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+  #timer-display {
+            font-size: 3em;
+            color: #dc3545;
+        }
+        #timer h4 {
+            color: #1a6ec8;
+        }  
+        .gradient-text {
+        background: linear-gradient(to right, #FFD700, #FF6347); /* Gradient text color */
+        /* -webkit-background-clip: text; */
+        color: transparent;
+    }
+    
+    .card {
+    border: 1px solid #d39a9a;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    /* background-color: #d3b1b3; */
+    /* background: linear-gradient(45deg, #ff6b6b, #9b9059, #c82980); */
+}
+
+/* .card:hover {
+    transform: scale(1.05);
+} */
+
+/* Centering the category buttons */
+.d-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
 <div class="col-12">
   <div class="d-flex justify-content-center align-items-center">
 
-  <h1 class="  text-bg-danger"><span>   Reviews</h1></span> 
+
+  <h2 class="fw-bolder display-5 mt-5 mt-md-2"> <span
+    class="text-danger display-3 fw-bolder ">Reviews</span>
+</h2>
   </div>
 <div class="col-12 p-3">
 <div class="d-flex flex-wrap  pt-5 m-4">

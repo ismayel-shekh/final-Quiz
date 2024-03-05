@@ -2,32 +2,47 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<h1>your point {{user_data.score}}</h1>
-<h1>your currect Qusestion {{user_data.currect_quiz}}</h1>
-<table class="table">
-    <thead>
-      <tr>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Your Results</h1>
 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Your Point: {{ user_data.score }}</h3>
+                    <h3 class="card-title">Your Correct Questions: {{ user_data.currect_quiz }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <th scope="col">Question</th>
-        <th scope="col">Your Answer</th>
-        <th scope="col">Currect</th>
-      </tr>
-
-    </thead>
-    <tbody>
-      <tr>
-        {% for x in data%}
-  
-        <td>{{x.question}}</td>
-        <td>{{x.your_choice}}</td>
-        <td>{{x.currect_choice}}</td>
-      </tr>
-      {% endfor %}
-
-    </tbody>
-  </table>
-
-
+    <div class="card mt-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Detailed Answers</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Question</th>
+                            <th scope="col">Your Answer</th>
+                            <th scope="col">Correct Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in data %}
+                            <tr>
+                                <td>{{ x.question }}</td>
+                                <td>{{ x.your_choice }}</td>
+                                <td>{{ x.currect_choice }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

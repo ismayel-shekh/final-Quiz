@@ -38,13 +38,14 @@ class UserUpdateForm(forms.ModelForm):
             except UserAccount.DoesNotExist:
                 user_account = None
             if user_account:
-                self.fields['first_name'].initial = user_account.first_name
-                self.fields['last_name'].initial = user_account.last_name
-                self.fields['email'].initial = user_account.email
+                user = user_account.user
+                self.fields['first_name'].initial = user.first_name
+                self.fields['last_name'].initial = user.last_name
+                self.fields['email'].initial = user.email
                 self.fields['mobile_no'].initial = user_account.mobile_no
 
 
-                print(user_account.last_name)
+                # print(user_account.last_name)
 
 
     def save(self, commit=True):

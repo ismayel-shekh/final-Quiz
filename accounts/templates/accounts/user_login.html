@@ -2,14 +2,50 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<form method="post" class="custom-form" style="width: 50%; margin: auto;">
+<!-- <style>
+body {
+    height: 1000px;
+    
+    margin: 0;
+    display: contents;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-form {
+    width: 50%;
+    margin: auto;
+}
+</style>
+<form method="post" class="custom-form" style=" height: 80vh; width: 50%; margin: auto;">
     <h1>Login</h1>
 
     {% csrf_token %}
 
     <!-- {% crispy form %} -->
-    {{form | crispy}}
-    <button class="btn btn-warning mb-5">Submit</button>
-</form>
+    <!-- {{form | crispy}} -->
+    <!-- <button class="btn btn-warning mb-5">Submit</button> -->
+<!-- </form> --> 
+
+<div class="my-5 d-flex justify-content-center" style="height: 70vh;">
+    <div class="row container align-items-center m-0">
+        <div class="col-12 col-md-7 order-2 order-md-1 text-center">
+            <form method="post" class="custom-form" style=" width: 80%; margin: auto;">
+                <h1>Login</h1>
+            
+                {% csrf_token %}
+            
+                <!-- {% crispy form %} -->
+                {{form | crispy}}
+                <button class="btn btn-warning mb-3">Submit</button>
+            </form>
+  
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex order-1 order-md-2 justify-content-center">
+            <img src="/static/24070702_bwink_bld_03_single_03.jpg" class="w-75" alt="Answer Picture">
+        </div>
+    </div>
+  </div>
 
 {% endblock %}

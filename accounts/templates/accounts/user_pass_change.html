@@ -3,14 +3,37 @@
 {% extends 'base.html' %} 
 {% load crispy_forms_tags %}
  {% block content %} 
- <form method="post" style="width: 50%; margin: auto;">
-    <h1>UPDATE PROFILE</h1>
+ <!-- <form method="post" style="width: 50%; margin: auto;">
+    <h1>UPDATE PROFILE</h1> -->
     
     {% csrf_token %}
     
     <!-- {% crispy form %} -->
-    {{form | crispy}}
-    <button class="btn btn-warning mb-5">Submit</button>
-    </form>
-
+    <!-- {{form | crispy}} -->
+    <!-- <button class="btn btn-warning mb-5">Submit</button>
+    </form> -->
+    <div class="d-flex flex-wrap px-5 pt-3 align-items-center justify-content-center">
+    <div class="col-12 col-md-6 order-2 order-md-1" style="height: 80vh;">
+      <div class="card p-4">
+          <form method="POST" novalidate >
+              {% csrf_token %}
+              <h2 class="text-center mb-4">UPDATE PASSWORD</h2>
+              
+              {% for field in form %}
+              <div class="mb-3">
+                  {% if field.errors %}
+                  <ul class="errorlist">
+                      {% for error in field.errors %}
+                      <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+                  {{ field.label_tag }} {{ field }}
+              </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-primary btn-block">Update</button>
+          </form>
+      </div>
+  </div>
+    </div>
     {% endblock %}
