@@ -3,24 +3,43 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UserAccount
 
+# class UserFrom(UserCreationForm):
+#     mobile_no = forms.CharField(max_length=20)
+#     class Meta:
+#         model = User
+#         fields =['username','first_name', 'last_name','email','password1', 'password2', 'mobile_no',]
+#     def save(self, commit=True):
+#         our_user = super().save(commit=False)
+#         if commit == True:
+#             our_user.save()
+#             mobile_no = self.cleaned_data.get('mobile_no')
+
+#             UserAccount.objects.create(
+#                 user = our_user,
+#                 mobile_no = mobile_no,
+
+#             )
+#         return our_user
+        
 class UserFrom(UserCreationForm):
     mobile_no = forms.CharField(max_length=20)
+    
     class Meta:
         model = User
-        fields =['username','first_name', 'last_name','email','password1', 'password2', 'mobile_no',]
-    def save(self, commit=True):
-        our_user = super().save(commit=False)
-        if commit == True:
-            our_user.save()
-            mobile_no = self.cleaned_data.get('mobile_no')
-            image = self.cleaned_data.get('image')
-            UserAccount.objects.create(
-                user = our_user,
-                mobile_no = mobile_no,
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'mobile_no']
 
-            )
-        return our_user
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.save()
         
+        mobile_no = self.cleaned_data.get('mobile_no')
+        UserAccount.objects.create(
+            user=user,
+            mobile_no=mobile_no,
+        )
+
+        return user
+
 class UserUpdateForm(forms.ModelForm):
     mobile_no = forms.CharField(max_length=20)
 

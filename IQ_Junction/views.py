@@ -13,3 +13,10 @@ def home(request, category_slug = None):
 def leader(request):
     data = UserAccount.objects.all().order_by('-score')
     return render(request, 'leader.html', {'data': data})
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def contact_us(request):
+    return render(request, 'contact_us.html')

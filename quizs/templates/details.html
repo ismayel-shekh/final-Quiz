@@ -2,182 +2,219 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<!-- <ul>
-  <div id="timer">Time left: 300 seconds</div>
-  <li> Every Question Point: {{ question.point }}</li>
-  {% for question in quizs.question_set.all %}
-    <li>
-      {{ question.question }}
-      <ul>
-        <li><a class="choice-link btn btn-primary"  data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="#">Choice 1: {{ question.choice_1 }}</a></li>
-        <li><a class="choice-link btn btn-success" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="#">Choice 2: {{ question.choice_2 }}</a></li>
-        <li><a class="choice-link btn btn-warning" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="#">Choice 3: {{ question.choice_3 }}</a></li>
-        <li><a class="choice-link btn btn-info" data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="#">Choice 4: {{ question.choice_4 }}</a></li>
-      </ul>
-    </li>
-  {% endfor %}
-  <br/>
-  <button class="btn btn-danger"><a href=" {% url 'review' %} ">Complite</a></button>
-  <!-- <button id="reviewButton">Review</button>
-  <button id="historyButton">History</button> -->
-<!-- </ul> -->
 
-<!-- <div id="timer">Time left: 300 seconds</div> -->
 
-<div class="container mt-4">
-  <div id="timer" class="text-center mb-4">
+<div class="container mt-4 ">
+  
+    <div id="timer" class="text-center  d-flex justify-content-center">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="font-weight-bold text-primary text-uppercase text-bg-light">Time Remaining</h4>
+            <div id="timer-display" class="display-4 gradient-text fw-bold" style="color: rgb(139, 15, 15);">300s</div>
     
-    <h4 class="font-weight-bold text-primary">Time Remaining</h4>
-    
-    <div id="timer-display" class="display-4 gradient-text">300s</div>
-</div>
-    <div class="row">
-        <div class="col-12">
-          
+          </div>
         </div>
-        {% for question in quizs.question_set.all %}
-        <div class="col-12 mt-4">
-          <div class="card">
-            <div class="card-body">
-                      <h4 class="font-weight-bold text-success">Quiz Point: {{ question.point }}</h4>
-                        <h5 class="card-title" style="color: #0066cc; font-size: 1.5em; font-weight: bold;">{{ question.question }}</h5>
-                        <div class="row">
-                            <div class="col-md-6 mb-2">
-                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="#">
-                                    1. {{ question.choice_1 }}
-                                </a>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="#">
-                                    2. {{ question.choice_2 }}
-                                </a>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="#">
-                                    3. {{ question.choice_3 }}
-                                </a>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="#">
-                                    4. {{ question.choice_4 }}
-                                </a>
+    </div>
+
+<style>
+   /* html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+} */
+
+.glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    background: #483d3d;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:#B0C4DE;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+</style>
+    <div class="row" style="height: 60vh;">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+
+            <div class="question-container">
+                {% for question in quizs.question_set.all %}
+                <div class="question" id="question-{{ question.id }}" {% if forloop.first %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+                    <div class="card d-flex justify-content-center align-items-center" >
+                        <div class="card-body  justify-content-center align-items-center">
+                            <h4 class="font-weight-bold " style="color: red;">Question No : {{ forloop.counter}}</h4>
+
+                            <h4 class="font-weight-bold " style="color: red;">Point: {{ question.point }}</h4>
+                            <h5 class="card-title" style="color: #0066cc; font-size: 1.5em; font-weight: bold;">{{ question.question }}</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <button class="glow-on-hover" type="button" ><a class="choice-link" style="text-decoration: none;  color: rgb(0, 0, 0);" data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="">1. {{ question.choice_1 }}</a></button>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <button class="glow-on-hover" type="button" ><a class="choice-link " style="text-decoration: none;  color: rgb(0, 0, 0);" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="">2. {{ question.choice_2 }}</a></button>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <button class="glow-on-hover" type="button" ><a class="choice-link " style="text-decoration: none;  color: rgb(0, 0, 0);" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="">3. {{ question.choice_3 }}</a></button>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <button class="glow-on-hover" type="button" ><a class="choice-link " style="text-decoration: none;  color: rgb(0, 0, 0);"data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="">4. {{ question.choice_4 }}</a></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
-    <div class="row mt-4">
-        <div class="col-12">
-            <button class="btn btn-warning"><a class="text-decoration-none" href="{% url 'review' %}">Complete</a></button>
+            <div class="quiz-actions mt-4" style="display: none;">
+                <button id="completeButton" class="glow-on-hover" type="button"><a class="text-decoration-none" href="{% url 'review' %}">Complete</a></button>
+            </div>
+        </div>
+          </div>
         </div>
     </div>
 </div>
 
-
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var choiceLinks = document.querySelectorAll('.choice-link');
-    var timerElement = document.getElementById('timer');
-    var timeLeft = 300; // Set the initial time in seconds
+    document.addEventListener("DOMContentLoaded", function() {
+        var choiceLinks = document.querySelectorAll('.choice-link');
+        var questions = document.querySelectorAll('.question');
+        var quizActions = document.querySelector('.quiz-actions');
+        var timerElement = document.getElementById('timer-display');
+        var timeLeft = 300;
 
-    function preventDefault(event) {
-      event.preventDefault();
-    }
+        function preventDefault(event) {
+            event.preventDefault();
+        }
 
-    function updateTimer() {
-      var minutes = Math.floor(timeLeft / 60);
-      var seconds = timeLeft % 60;
+        function updateTimer() {
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft % 60;
+            timerElement.textContent = minutes + 'm ' + seconds + 's';
+            if (timeLeft === 0) {
+                window.location.href = '/';
+            } else {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
 
-      timerElement.textContent = 'Time left: ' + minutes + 'm ' + seconds + 's';
+        updateTimer();
 
-      if (timeLeft === 0) {
-        // Redirect to home page when the timer reaches zero
-        window.location.href = '/'; // Change this to your home page URL
-      } else {
-        timeLeft--;
-        setTimeout(updateTimer, 1000); // Update the timer every second
-      }
-    }
-
-    // Start the timer when the page loads
-    updateTimer();
-
-    choiceLinks.forEach(function(link) {
-      link.addEventListener('click', function(event) {
-        preventDefault(event);
-
-        var questionId = this.getAttribute('data-question-id');
-        var selectedChoice = this.getAttribute('data-choice');
-
-        // Disable other choices for the same question
-        var otherChoices = document.querySelectorAll('.choice-link[data-question-id="' + questionId + '"]');
-        otherChoices.forEach(function(otherChoice) {
-          if (otherChoice !== link) {
-            otherChoice.removeEventListener('click', preventDefault);
-            otherChoice.style.pointerEvents = 'none';
-          }
+        choiceLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                preventDefault(event);
+                var questionId = this.getAttribute('data-question-id');
+                var selectedChoice = this.getAttribute('data-choice');
+                var nextQuestionIndex = parseInt(questionId) + 1;
+                var nextQuestion = document.getElementById('question-' + nextQuestionIndex);
+                var currentQuestion = document.getElementById('question-' + questionId);
+                fetch(`/check_answer/${questionId}/${selectedChoice}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        Swal.fire({
+                            icon: data.is_correct ? 'success' : 'error',
+                            title: data.is_correct ? 'Correct!' : 'Incorrect!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        currentQuestion.style.display = 'none';
+                        if (nextQuestion) {
+                            nextQuestion.style.display = 'block';
+                        } else {
+                            quizActions.style.display = 'block';
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
         });
 
-        // Make AJAX request
-        fetch(`/check_answer/${questionId}/${selectedChoice}/`)
-          .then(response => response.json())
-          .then(data => {
-            Swal.fire({
-              icon: data.is_correct ? 'success' : 'error',
-              title: data.is_correct ? 'Correct!' : 'Incorrect!',
-              showConfirmButton: false,
-              timer: 1500 // Set the timer to automatically close the notification after 1.5 seconds
-            });
-            // You can update the UI here if needed
-          })
-          .catch(error => console.error('Error:', error));
-      });
-    });
 
-    // Button click events
-    document.getElementById('reviewButton').addEventListener('click', function() {
-      // Add logic for the "Review" button, e.g., redirect to a review page
-      window.location.href = '/review-page/'; // Change this to your desired review page URL
-    });
 
-    document.getElementById('historyButton').addEventListener('click', function() {
-      // Add logic for the "History" button, e.g., redirect to a history page
-      window.location.href = '/history-page/'; // Change this to your desired history page URL
+        document.getElementById('historyButton').addEventListener('click', function() {
+            window.location.href = '/history-page/';
+        });
     });
-  });
 </script>
 
 
-
 <style>
-  .card{
-      transition: all 0.3s;
-  }
-  /* .card:hover{
-      transform: scale(1.15);
-  } */
-
-  #timer {
-            background-color: #f8d7da;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-  #timer-display {
-            font-size: 3em;
-            color: #dc3545;
-        }
-        #timer h4 {
-            color: #1a6ec8;
-        }  
-        .gradient-text {
-        background: linear-gradient(to right, #FFD700, #FF6347); /* Gradient text color */
-        /* -webkit-background-clip: text; */
-        color: transparent;
+    .card{
+    transition: all 0.3s;
     }
+    /* .card:hover{
+    transform: scale(1.15);
+    } */
     
+    /* #timer {
+    background-color: #f8d7da;
+    padding: 20px;
+    border-radius: 8px;
+    }
+     */
+    /* #timer-display {
+    font-size: 3em;
+    color: #dc3545;
+    } */
+    #timer h4 {
+    color: #1a6ec8;
+    } 
+
     .card {
     border: 1px solid #d39a9a;
     border-radius: 8px;
@@ -185,41 +222,40 @@
     transition: transform 0.3s ease-in-out;
     /* background-color: #d3b1b3; */
     /* background: linear-gradient(45deg, #ff6b6b, #9b9059, #c82980); */
-}
-
-/* .card:hover {
+    }
+    
+    /* .card:hover {
     transform: scale(1.05);
-} */
-
-/* Centering the category buttons */
-.d-flex-center {
+    } */
+    
+    /* Centering the category buttons */
+    .d-flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-</style>
-<div class="col-12">
-  <div class="d-flex justify-content-center align-items-center">
-
-
-  <h2 class="fw-bolder display-5 mt-5 mt-md-2"> <span
+    }
+    </style>
+    <div class="col-12">
+    <div class="d-flex justify-content-center align-items-center">
+    
+    <h2 class="fw-bolder display-5 mt-5 mt-md-2"> <span
     class="text-danger display-3 fw-bolder ">Reviews</span>
-</h2>
-  </div>
-<div class="col-12 p-3">
-<div class="d-flex flex-wrap  pt-5 m-4">
-{% for review in reviews %}
-<div class="m-4">
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
+    </h2>
+    </div>
+    <div class="col-12 p-3">
+    <div class="d-flex flex-wrap pt-5 m-4">
+    {% for review in reviews %}
+    <div class="m-4">
+    <div class="card" style="width: 18rem;">
+    <div class="card-body">
     <h5 class="card-title text-uppercase" >{{review.Name}}</h5>
     <h5 class="card-title">{{review.rating}}</h5>
     <a href="#" class="btn btn-primary text-uppercase"></a>
-  </div>
-</div>
-</div>
-{% endfor %}
-</div>
-</div>
+    </div>
+    </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
 
 {% endblock %}

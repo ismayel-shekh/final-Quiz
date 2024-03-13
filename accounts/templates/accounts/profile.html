@@ -6,15 +6,15 @@
   {% if messages %}
     document.addEventListener('DOMContentLoaded', function() {
       Swal.fire({
-        title: 'Messages',
+        title: 'Success!',
         html: `
-          <ul>
+          <p>
             {% for message in messages %}
-              <li>{{ message }}</li>
+              {{ message }}
             {% endfor %}
-          </ul>
+          </p>
         `,
-        icon: 'info',
+        icon: 'success',
         showCloseButton: true,
         confirmButtonText: 'OK',
       });
@@ -64,7 +64,7 @@
 
 <div class="my-5 d-flex justify-content-center" style="height: 70vh;">
   <div class="row container align-items-center m-0">
-      <div class="col-12 col-md-7 order-2 order-md-1 text-center">
+      <!-- <div class="col-12 col-md-7 order-2 order-md-1 text-center">
         <div class="d-flex flex-wrap px-5 pt-3 align-items-center">
           <div class="col-4">
               <div class="card" style="width: 25rem;">
@@ -81,10 +81,22 @@
               </div>
           </div> 
         </div>
-          </div>
-      </div>
+          </div> -->
+
+      <form method="post" style="width: 50%; margin: auto;">
+        <h1>UPDATE PROFILE</h1>
+        
+        {% csrf_token %}
+        
+
+        {{form | crispy}}
+        <button class="btn btn-warning mb-5">UPDATE</button>
+        <br>
+      </form>
+      <a href="{% url 'pass_change' %}" class="btn btn-danger" >CHANGE PASSWORD</a>
+  </div>
       <div class="col-12 col-md-6 d-flex order-1 order-md-2 justify-content-center">
-          <img src="/static/13717645_5325960.jpg" class="w-75" alt="Answer Picture">
+          <img src="/static/updateprofile.jpg" class="w-100" alt="Answer Picture">
       </div>
   </div>
 </div>

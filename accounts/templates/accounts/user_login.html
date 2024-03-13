@@ -2,6 +2,25 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+<script>
+    {% if messages %}
+      document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+          title: 'Success!',
+          html: `
+            <p>
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+            </p>
+          `,
+          icon: 'success',
+          showCloseButton: true,
+          confirmButtonText: 'OK',
+        });
+      });
+    {% endif %}
+  </script>
 <!-- <style>
 body {
     height: 1000px;
@@ -26,7 +45,8 @@ body {
     <!-- {{form | crispy}} -->
     <!-- <button class="btn btn-warning mb-5">Submit</button> -->
 <!-- </form> --> 
-
+<div class="container">
+    <div class="shadow row d-flex justify-content-center align-items-center mx-auto my-5  rounded-3">
 <div class="my-5 d-flex justify-content-center" style="height: 70vh;">
     <div class="row container align-items-center m-0">
         <div class="col-12 col-md-7 order-2 order-md-1 text-center">
@@ -43,9 +63,10 @@ body {
             </div>
         </div>
         <div class="col-12 col-md-6 d-flex order-1 order-md-2 justify-content-center">
-            <img src="/static/24070702_bwink_bld_03_single_03.jpg" class="w-75" alt="Answer Picture">
+            <img src="/static/12892962_5098293.jpg" class="w-100" alt="Answer Picture">
         </div>
     </div>
   </div>
-
+</div>
+</div>
 {% endblock %}

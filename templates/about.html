@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  
+.team .member {
+position: relative;
+box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+padding: 30px;
+border-radius: 5px;
+background: #fff;
+}
+
+.team .member .teampic {
+overflow: hidden;
+width: 180px;
+border-radius: 50%;
+}
+
+/* .team .member .teampic img {
+transition: ease-in-out 0.3s;
+} */
+
+
+.team .member .member-info {
+padding-left: 30px;
+}
+
+.team .member h4 {
+font-weight: 700;
+margin-bottom: 5px;
+font-size: 20px;
+color: tomato;
+}
+
+.team .member span {
+display: block;
+font-size: 15px;
+padding-bottom: 10px;
+position: relative;
+font-weight: 500;
+}
+
+.team .member span::after {
+content: "";
+position: absolute;
+display: block;
+width: 50px;
+height: 2px;
+background: black;
+bottom: 0;
+left: 0;
+}
+
+.team .member p {
+margin: 10px 0 0 0;
+font-size: 14px;
+}
+
+.team .member .social {
+margin-top: 12px;
+display: flex;
+align-items: center;
+justify-content: flex-start;
+}
+
+.team .member .social a {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 32px;
+height: 32px;
+background: #eff2f8;
+}
+
+.team .member .social a i {
+color: tomato;
+font-size: 16px;
+margin: 0 2px;
+}
+
+.team .member .social a:hover {
+background: tomato;
+}
+
+.team .member .social a:hover i {
+color: #fff;
+}
+
+.team .member .social a+a {
+margin-left: 8px;
+}
+
+section {
+padding: 60px 0;
+overflow: hidden;
+}
+
+
+
+.section-title {
+text-align: center;
+padding-bottom: 30px;
+}
+
+.section-title h2 {
+font-size: 32px;
+font-weight: bold;
+text-transform: uppercase;
+margin-bottom: 20px;
+padding-bottom: 20px;
+position: relative;
+color: tomato;
+}
+
+.underline{
+    width: 150px;
+    height: 1px;
+    background-color: black;
+    margin: auto;
+    margin-top: -30px;
+}
+/* .section-title h2::before {
+content: "";
+position: absolute;
+display: block;
+width: 120px;
+height: 1px;
+background: #ddd;
+bottom: 1px;
+left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+content: "";
+position: absolute;
+display: block;
+width: 40px;
+height: 3px;
+background: #47b2e4;
+bottom: 0;
+left: calc(50% - 20px);
+} */
+
+.section-title p {
+margin-top: 20px;
+}
+
+  
+</style>
+<section id="team" class="team section-bg">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Team</h2>
+        <div class="underline"></div>
+        <p>As a cohesive website team, we synergize our diverse talents to bring your digital vision to life. With Benjamin's full-stack prowess, Amelia's senior software engineering finesse, and Charlotte's seasoned expertise, we ensure unparalleled innovation and seamless functionality. Together, we're dedicated to crafting exceptional online experiences that resonate with our commitment to excellence.</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="member d-flex align-items-start justify-content-center align-items-center" >
+            <div class="teampic d-flex justify-content-center align-items-center"><img src="/static/mypic1.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>Ismayel</h4>
+              <span>Chief Executive Officer</span>
+              
+              <p>I am dedicated to steering our organization towards innovation, growth, and success, ensuring a future of unparalleled excellence.</p>
+              <div class="social">
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+                <a href=""> <i class="bi bi-whatsapp"></i> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mt-4 mt-lg-0">
+          <div class="member d-flex align-items-start justify-content-center align-items-center" >
+            <div class="teampic"><img src="/static/seth-doyle-vmBik4xv27s-unsplash.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>Benjamin</h4>
+              <span>Full-stack developer</span>
+              <p> As a dynamic full-stack developer, crafts seamless digital experiences by merging front-end finesse with robust back-end functionality.</p>
+              <div class="social">
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+                <a href=""> <i class="bi bi-whatsapp"></i> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mt-4">
+          <div class="member d-flex align-items-start justify-content-center align-items-center" >
+            <div class="teampic"><img src="/static/portrait-interesting-young-man-winter-clothes.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>Amelia</h4>
+              <span>Senior software engineer</span>
+              <p>As a software engineer, orchestrates cutting-edge solutions and drives technological excellence to elevate our project.</p>
+              <div class="social">
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+                <a href=""> <i class="bi bi-whatsapp"></i> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mt-4">
+          <div class="member d-flex align-items-start justify-content-center align-items-center" >
+            <div class="teampic"><img src="/static/guy-plaid-shirt.jpg" class="img-fluid" alt=""></div>
+            <div class="member-info">
+              <h4>Charlotte</h4>
+              <span>Senior software engineer</span>
+              <p>As a  software engineer, pioneers intricate solutions with a blend of expertise and innovation, shaping the future of our software landscape</p>
+              <div class="social">
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+                <a href=""> <i class="bi bi-whatsapp"></i> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <br/>
+{% endblock %}

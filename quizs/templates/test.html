@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!-- <ul>
+<div id="timer">Time left: 300 seconds</div>
+<li> Every Question Point: {{ question.point }}</li>
+{% for question in quizs.question_set.all %}
+<li>
+{{ question.question }}
+<ul>
+<li><a class="choice-link btn btn-primary" data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="#">Choice 1: {{ question.choice_1 }}</a></li>
+<li><a class="choice-link btn btn-success" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="#">Choice 2: {{ question.choice_2 }}</a></li>
+<li><a class="choice-link btn btn-warning" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="#">Choice 3: {{ question.choice_3 }}</a></li>
+<li><a class="choice-link btn btn-info" data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="#">Choice 4: {{ question.choice_4 }}</a></li>
+</ul>
+</li>
+{% endfor %}
+<br/>
+<button class="btn btn-danger"><a href=" {% url 'review' %} ">Complite</a></button>
+<!-- <button id="reviewButton">Review</button>
+<button id="historyButton">History</button> -->
+<!-- </ul> -->
+
+<!-- <div id="timer">Time left: 300 seconds</div> -->
+
+<div class="container mt-4">
+<div id="timer" class="text-center mb-4">
+<h4 class="font-weight-bold text-primary">Time Remaining</h4>
+<div id="timer-display" class="display-4 gradient-text">300s</div>
+</div>
+<div class="row">
+<div class="col-12">
+</div>
+{% for question in quizs.question_set.all %}
+<div class="col-12 mt-4">
+<div class="card">
+<div class="card-body">
+<h4 class="font-weight-bold text-success">Quiz Point: {{ question.point }}</h4>
+<h5 class="card-title" style="color: #0066cc; font-size: 1.5em; font-weight: bold;">{{ question.question }}</h5>
+<div class="row">
+<div class="col-md-6 mb-2">
+<a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_1 }}" href="#">
+1. {{ question.choice_1 }}
+</a>
+</div>
+<div class="col-md-6 mb-2">
+<a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_2 }}" href="#">
+2. {{ question.choice_2 }}
+</a>
+</div>
+<div class="col-md-6 mb-2">
+<a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_3 }}" href="#">
+3. {{ question.choice_3 }}
+</a>
+</div>
+<div class="col-md-6 mb-2">
+<a class="choice-link btn btn-success btn-block" data-question-id="{{ question.id }}" data-choice="{{ question.choice_4 }}" href="#">
+4. {{ question.choice_4 }}
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+<div class="row mt-4">
+<div class="col-12">
+<button class="btn btn-warning"><a class="text-decoration-none" href="{% url 'review' %}">Complete</a></button>
+</div>
+</div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+var choiceLinks = document.querySelectorAll('.choice-link');
+var timerElement = document.getElementById('timer');
+var timeLeft = 300; // Set the initial time in seconds
+
+function preventDefault(event) {
+event.preventDefault();
+}
+
+function updateTimer() {
+var minutes = Math.floor(timeLeft / 60);
+var seconds = timeLeft % 60;
+
+timerElement.textContent = 'Time left: ' + minutes + 'm ' + seconds + 's';
+
+if (timeLeft === 0) {
+// Redirect to home page when the timer reaches zero
+window.location.href = '/'; // Change this to your home page URL
+} else {
+timeLeft--;
+setTimeout(updateTimer, 1000); // Update the timer every second
+}
+}
+
+// Start the timer when the page loads
+updateTimer();
+
+choiceLinks.forEach(function(link) {
+link.addEventListener('click', function(event) {
+preventDefault(event);
+
+var questionId = this.getAttribute('data-question-id');
+var selectedChoice = this.getAttribute('data-choice');
+
+// Disable other choices for the same question
+var otherChoices = document.querySelectorAll('.choice-link[data-question-id="' + questionId + '"]');
+otherChoices.forEach(function(otherChoice) {
+if (otherChoice !== link) {
+otherChoice.removeEventListener('click', preventDefault);
+otherChoice.style.pointerEvents = 'none';
+}
+});
+
+// Make AJAX request
+fetch(`/check_answer/${questionId}/${selectedChoice}/`)
+.then(response => response.json())
+.then(data => {
+Swal.fire({
+icon: data.is_correct ? 'success' : 'error',
+title: data.is_correct ? 'Correct!' : 'Incorrect!',
+showConfirmButton: false,
+timer: 1500 // Set the timer to automatically close the notification after 1.5 seconds
+});
+// You can update the UI here if needed
+})
+.catch(error => console.error('Error:', error));
+});
+});
+
+// Button click events
+document.getElementById('reviewButton').addEventListener('click', function() {
+// Add logic for the "Review" button, e.g., redirect to a review page
+window.location.href = '/review-page/'; // Change this to your desired review page URL
+});
+
+document.getElementById('historyButton').addEventListener('click', function() {
+// Add logic for the "History" button, e.g., redirect to a history page
+window.location.href = '/history-page/'; // Change this to your desired history page URL
+});
+});
+</script>
+
+
+<style>
+.card{
+transition: all 0.3s;
+}
+/* .card:hover{
+transform: scale(1.15);
+} */
+
+#timer {
+background-color: #f8d7da;
+padding: 20px;
+border-radius: 8px;
+}
+
+#timer-display {
+font-size: 3em;
+color: #dc3545;
+}
+#timer h4 {
+color: #1a6ec8;
+} 
+.gradient-text {
+background: linear-gradient(to right, #FFD700, #FF6347); /* Gradient text color */
+/* -webkit-background-clip: text; */
+color: transparent;
+}
+.card {
+border: 1px solid #d39a9a;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease-in-out;
+/* background-color: #d3b1b3; */
+/* background: linear-gradient(45deg, #ff6b6b, #9b9059, #c82980); */
+}
+
+/* .card:hover {
+transform: scale(1.05);
+} */
+
+/* Centering the category buttons */
+.d-flex-center {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+</style>
+<div class="col-12">
+<div class="d-flex justify-content-center align-items-center">
+
+<h2 class="fw-bolder display-5 mt-5 mt-md-2"> <span
+class="text-danger display-3 fw-bolder ">Reviews</span>
+</h2>
+</div>
+<div class="col-12 p-3">
+<div class="d-flex flex-wrap pt-5 m-4">
+{% for review in reviews %}
+<div class="m-4">
+<div class="card" style="width: 18rem;">
+<div class="card-body">
+<h5 class="card-title text-uppercase" >{{review.Name}}</h5>
+<h5 class="card-title">{{review.rating}}</h5>
+<a href="#" class="btn btn-primary text-uppercase"></a>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+{% endblock %}
+

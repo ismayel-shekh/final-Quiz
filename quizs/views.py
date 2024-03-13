@@ -34,6 +34,33 @@ class QuizView(DetailView):
 #     if c_value == qus.currect_choice:
 #         user_acount.score += qus.point
 
+def createCatagory(request):
+    if request.method == 'POST':
+        form = forms.createCatagory(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = forms.createCatagory()
+    return render(request, 'create_catagory.html', {'form': form})
+def createquiz(request):
+    if request.method == 'POST':
+        form = forms.CreateQuiz(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = forms.CreateQuiz()
+    return render(request, 'create_quiz.html', {'form': form})
+def createquestion(request):
+    if request.method == 'POST':
+        form = forms.createQuestion(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = forms.createQuestion()
+    return render(request, 'create_questin.html', {'form': form})
 
 from django.http import JsonResponse
 
@@ -106,10 +133,15 @@ def quiz_review(request):
     if request.method == 'POST':
         review = forms.ReviewForm(request.POST)
         if review.is_valid():
-            review.save()
+            review_instance = review.save(commit=False)
+            review_instance.reviewer = request.user
+            # review_instance.quiz = user_account.current_quiz
+            review_instance.save()
             return redirect('history')
     else:
-        review = forms.ReviewForm()
+        initial_data = {'reviewer': request.user}
+        review = forms.ReviewForm(initial=initial_data)
+
     return render(request, 'review.html', {'form': review})
 
 # from django.core.mail import send_mail
@@ -135,3 +167,5 @@ def quiz_review(request):
 #             send_mail(subject, message, 'from@example.com', [request.user.email])
 
 #         return self.get(request, *args, **kwargs)
+
+#fr

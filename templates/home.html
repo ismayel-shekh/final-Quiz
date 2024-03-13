@@ -19,13 +19,19 @@
 
 /* Styling for the quiz cards */
 .card {
-    border: 1px solid #543838;
+    border: 1px solid #825c5c;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-    background-color: #faaab1;
+    background-color: #ffffff;
 }
-
+.cardx {
+    border: 1px solid #795252;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    background-color: #f2dada;
+}
 .card:hover {
     transform: scale(1.05);
 }
@@ -43,9 +49,9 @@
 </style>
 
 
-<div class="my-5 d-flex justify-content-center">
-  <div class="row container align-items-center m-0">
-      <div class="col-12 col-md-7 order-2 order-md-1 text-center">
+<div class="my-5 d-flex justify-content-center ">
+  <div class="row container align-items-center m-0 ">
+      <div class="col-12 col-md-7 order-2 order-md-1 text-center ">
           <h2 class="fw-bolder display-5 mt-5 mt-md-2">Welcome to <span
                   class="text-danger display-3 fw-bolder ">IQ Janction.</span>
           </h2>
@@ -55,7 +61,7 @@
 
           </div>
       </div>
-      <div class="col-12 col-md-5 d-flex order-1 order-md-2 justify-content-center">
+      <div class="col-12 col-md-5 d-flex order-1 order-md-2 justify-content-center ">
           <img src="/static/30576701_7718877.jpg" class="w-75" alt="Answer Picture">
       </div>
   </div>
@@ -64,26 +70,41 @@
   <h1 class="display-4 fw-bold border-bottom  border-2 text-center my-3 w-50 py-3">Running Quizzes</h1>
 </div>
     <div class="d-flex-center">
+        <div class="mx-2">
+            <input type="radio" class="btn-check" Name="brand" id="" autocomplete="off" unchecked>
+            <label class="btn btn-danger cardx " for=" "><a href="/" class="text-decoration-none text-black">All</a></label>
+        </div>
         {% for c in category %}
             <div class="mx-2">
                 <input type="radio" class="btn-check" Name="brand" id="{{c.id}}" autocomplete="off" unchecked>
-                <label class="btn btn-danger card" for="{{c.name}} "><a href="{% url 'category_wice_quiz' c.name %}" class="text-decoration-none text-black">{{c.name}}</a></label>
+                <label class="btn btn-danger cardx " for="{{c.name}} "><a href="{% url 'category_wice_quiz' c.name %}" class="text-decoration-none text-black">{{c.name}}</a></label>
             </div>
         {% endfor %}
     </div>
 
-    <div class="col-12 p-3">
-        <div class="d-flex flex-wrap pt-5 m-5">
+    <div class="col-12 ">
+        <div class="d-flex flex-wrap  m-3">
             {% for c in data %}
                 <div class="m-4">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                            <h3 class="card-title">Category: {{c.catagory}}</h3>
-                            <h5 class="card-title">Title: {{c.title | truncatewords:2}}</h5>
-                            <p class="card-title">Description: {{c.description | truncatewords:5}}</p>
-                            {% if request.user.is_authenticated %}
-                                <a href="{% url 'quiz_detail' c.id %}" class="btn btn-primary">Start</a>
-                            {% endif %}
+                            <h4>{{c.catagory}}</h4>
+
+                            <p class="card-title"> {{c.title | truncatewords:8}}</p>
+
+                            <p class="card-title"> {{c.description | truncatewords:8}}</p>
+                            
+                            {% if request.user.is_authenticated %}            
+                            <a href="{% url 'quiz_detail' c.id %}" type="button" class="btn btn-sm btn-outline-danger">Start
+                                Quiz</a>
+
+                                {% else %}
+                                
+                                    <a href="{% url 'login' %}" type="button" class="btn btn-sm btn-outline-danger">Start
+                                        Quiz</a>
+                                    {% endif %}                            
+ 
+                            
                         </div>
                     </div>
                 </div>

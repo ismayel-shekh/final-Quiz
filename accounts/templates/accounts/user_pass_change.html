@@ -12,7 +12,7 @@
     <!-- {{form | crispy}} -->
     <!-- <button class="btn btn-warning mb-5">Submit</button>
     </form> -->
-    <div class="d-flex flex-wrap px-5 pt-3 align-items-center justify-content-center">
+    <!-- <div class="d-flex flex-wrap px-5 pt-3 align-items-center justify-content-center">
     <div class="col-12 col-md-6 order-2 order-md-1" style="height: 80vh;">
       <div class="card p-4">
           <form method="POST" novalidate >
@@ -34,6 +34,42 @@
               <button type="submit" class="btn btn-primary btn-block">Update</button>
           </form>
       </div>
-  </div>
+  </div> -->
+    </div>
+
+    <div class="container">
+        <div class="shadow row d-flex justify-content-center align-items-center mx-auto my-5  rounded-3">
+    <div class="my-5 d-flex justify-content-center" style="height: 70vh;">
+        <div class="row container align-items-center m-0">
+            <div class="col-12 col-md-7 order-2 order-md-1 text-center ">
+
+                    <form method="POST" novalidate >
+                        {% csrf_token %}
+                        <h2 class="text-center mb-4">UPDATE PASSWORD</h2>
+                        
+                        {% for field in form %}
+                        <div class="mb-3">
+                            {% if field.errors %}
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {{ field.label_tag }} {{ field }}
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </form>
+
+      
+                </div>
+            </div>
+            <div class="col-12 col-md-6 d-flex order-1 order-md-2 justify-content-center">
+                <img src="/static/7741838_3707915.jpg" class="w-100" alt="Answer Picture">
+            </div>
+        </div>
+      </div>
+    </div>
     </div>
     {% endblock %}

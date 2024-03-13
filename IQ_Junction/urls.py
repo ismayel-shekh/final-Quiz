@@ -23,6 +23,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('about', views.about, name='about'),
+    path('contact_us', views.contact_us, name='contact_us'),
     path('leaderboard', views.leader, name='leader'),
     path('category/<str:category_slug>/', views.home, name='category_wice_quiz'),
     path('', include('accounts.urls')),
